@@ -23,8 +23,8 @@ install:
   # gflags
   - ps: wget https://github.com/gflags/gflags/archive/v2.2.1.zip -O gflags.zip
   - cmd: unzip gflags.zip > nul
-  - dir
-  #- cmake -G"Visual Studio 15 2017 Win64" -HD:\dev\playground\eigen_build_imported_target -Bbuild
+  - cmake -G"%GENERATOR%" -Hgflags-2.2.1 -Bbuild_gflag -DCMAKE_INSTALL_PREFIX=c:/dev/install%PLATFORM% -DCMAKE_DEBUG_POSTFIX=d
+  - cmake --build build_gflag --config Release --target INSTALL
 
 build_script:
   - cd c:\dev
