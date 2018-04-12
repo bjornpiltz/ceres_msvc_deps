@@ -14,12 +14,17 @@ clone_folder: c:\dev\src
 install:
   # Cut some noise as described here: http://bit.ly/2gUJxhC
   - del "C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets"
-  - mkdir c:\dev\install%PLATFORM%
+  - cd c:\dev
+  - mkdir install%PLATFORM%
   # Eigen:
-  - git clone https://github.com/eigenteam/eigen-git-mirror.git
-  - ps: wget http://bitbucket.org/eigen/eigen/get/3.3.4.zip -O eigen3.zip
-  - cmd: unzip eigen3.zip > nul
-  - cmd: mv eigen-eigen-5a0156e40feb c:\dev\install%PLATFORM%\eigen
+  #- ps: wget http://bitbucket.org/eigen/eigen/get/3.3.4.zip -O eigen3.zip
+  #- cmd: unzip eigen3.zip > nul
+  #- cmd: mv eigen-eigen-5a0156e40feb c:\dev\install%PLATFORM%\eigen
+  # gflags
+  - ps: wget https://github.com/gflags/gflags/archive/v2.2.1.zip -O eigen3.zip gflags.zip
+  - cmd: unzip gflags.zip > nul
+  - dir
+  #- cmake -G"Visual Studio 15 2017 Win64" -HD:\dev\playground\eigen_build_imported_target -Bbuild
 
 build_script:
   - cd c:\dev
