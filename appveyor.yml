@@ -10,7 +10,7 @@ environment:
       IDENTIFIER: msvc_2017_x64
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     
-clone_folder: c:\dev\src
+clone_folder: c:\dev
 
 install:
   # Cut some noise as described here: http://bit.ly/2gUJxhC
@@ -46,6 +46,6 @@ build_script:
 #  - cmake --build . --config Release --target check
 
 artifacts:
-  - path: dev\ceres_deps_%IDENTIFIER%.zip
+  - path: ceres_deps_%IDENTIFIER%.zip
     name: ceres_deps_%IDENTIFIER%
 
