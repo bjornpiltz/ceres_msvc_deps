@@ -46,6 +46,6 @@ build_script:
 #  - cmake --build . --config Release --target check
 
 artifacts:
-  - path: ceres_deps_%IDENTIFIER%.zip
+  - path: dev\ceres_deps_%IDENTIFIER%.zip
     name: ceres_deps_%IDENTIFIER%
 
