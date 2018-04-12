@@ -7,6 +7,7 @@ environment:
   matrix:
     - GENERATOR: "Visual Studio 15 2017 Win64"
       PLATFORM: x64
+      IDENTIFIER: msvc_2017_x64
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     
 clone_folder: c:\dev\src
@@ -15,20 +16,25 @@ install:
   # Cut some noise as described here: http://bit.ly/2gUJxhC
   - del "C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets"
   - cd c:\dev
-  - mkdir install%PLATFORM%
+  - mkdir install%IDENTIFIER%
   # Eigen:
   #- ps: wget http://bitbucket.org/eigen/eigen/get/3.3.4.zip -O eigen3.zip
   #- cmd: unzip eigen3.zip > nul
-  #- cmd: mv eigen-eigen-5a0156e40feb c:\dev\install%PLATFORM%\eigen
+  #- cmd: mv eigen-eigen-5a0156e40feb c:\dev\install_%IDENTIFIER%\eigen
   # gflags
   - ps: wget https://github.com/gflags/gflags/archive/v2.2.1.zip -O gflags.zip
   - cmd: unzip gflags.zip > nul
-  - cmake -G"%GENERATOR%" -Hgflags-2.2.1 -Bbuild_gflag -DCMAKE_INSTALL_PREFIX=c:/dev/install%PLATFORM% -DCMAKE_DEBUG_POSTFIX=d
+  - cmake -G"%GENERATOR%" -Hgflags-2.2.1 -Bbuild_gflag -DCMAKE_INSTALL_PREFIX=c:/dev/install_%IDENTIFIER%
   - cmake --build build_gflag --config Release --target INSTALL
+  # glog
+  - ps: wget https://github.com/google/glog/archive/v0.3.5.zip -O glog.zip
+  - cmd: unzip glog.zip > nul
+  - dir
+  - cmake -G"%GENERATOR%" -Hglog-0.3.5 -Bbuild_glog -DCMAKE_INSTALL_PREFIX=c:/dev/install_%IDENTIFIER% -DBUILD_SHARED_LIBS=ON -DWITH_GFLAGS=ON
 
 build_script:
   - cd c:\dev
   - mkdir build
   - cd build
-#  - cmake -G"%GENERATOR%" -DCMAKE_PREFIX_PATH=c:/dev/install%PLATFORM% ../src
+#  - cmake -G"%GENERATOR%" -DCMAKE_PREFIX_PATH=c:/dev/install_%IDENTIFIER% ../src
 #  - cmake --build . --config Release --target check
