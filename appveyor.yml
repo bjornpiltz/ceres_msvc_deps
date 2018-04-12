@@ -18,14 +18,14 @@ install:
   - cd c:\dev
   - mkdir install_%IDENTIFIER%
   # Eigen:
-  #- ps: wget http://bitbucket.org/eigen/eigen/get/3.3.4.zip -O eigen3.zip
-  #- cmd: unzip eigen3.zip > nul
-  #- cmd: mv eigen-eigen-5a0156e40feb c:\dev\install_%IDENTIFIER%\eigen
+  - ps: wget http://bitbucket.org/eigen/eigen/get/3.3.4.zip -O eigen3.zip
+  - cmd: unzip eigen3.zip > nul
+  - cmd: mv eigen-eigen-5a0156e40feb c:\dev\install_%IDENTIFIER%\eigen
   # gflags
-  #- ps: wget https://github.com/gflags/gflags/archive/v2.2.1.zip -O gflags.zip
-  #- cmd: unzip gflags.zip > nul
-  #- cmake -G"%GENERATOR%" -Hgflags-2.2.1 -Bbuild_gflag -DCMAKE_INSTALL_PREFIX=c:/dev/install_%IDENTIFIER%
-  #- cmake --build build_gflag --config Release --target INSTALL
+  - ps: wget https://github.com/gflags/gflags/archive/v2.2.1.zip -O gflags.zip
+  - cmd: unzip gflags.zip > nul
+  - cmake -G"%GENERATOR%" -Hgflags-2.2.1 -Bbuild_gflag -DCMAKE_INSTALL_PREFIX=c:/dev/install_%IDENTIFIER%
+  - cmake --build build_gflag --config Release --target INSTALL
   # glog
   - ps: wget https://github.com/google/glog/archive/v0.3.5.zip -O glog.zip
   - cmd: unzip glog.zip > nul
@@ -41,7 +41,11 @@ install:
 
 build_script:
   - cd c:\dev
-  - mkdir build
-  - cd build
+  - 7z a ceres_deps_%IDENTIFIER%.zip install_%IDENTIFIER%\*
 #  - cmake -G"%GENERATOR%" -DCMAKE_PREFIX_PATH=c:/dev/install_%IDENTIFIER% ../src
 #  - cmake --build . --config Release --target check
+
+artifacts:
+  - path: ceres_deps_%IDENTIFIER%.zip
+    name: ceres_deps_%IDENTIFIER%
+
