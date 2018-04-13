@@ -5,9 +5,15 @@ matrix:
 
 environment:
   matrix:
+    - GENERATOR: "Visual Studio 14 2015 Win64"
+      IDENTIFIER: msvc_2015_x64
+    - GENERATOR: "Visual Studio 14 2015"
+      IDENTIFIER: msvc_2015_x86
     - GENERATOR: "Visual Studio 15 2017 Win64"
-      PLATFORM: x64
       IDENTIFIER: msvc_2017_x64
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - GENERATOR: "Visual Studio 15 2017"
+      IDENTIFIER: msvc_2017_x86
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     
 clone_folder: c:\dev
