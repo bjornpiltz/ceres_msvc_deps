@@ -25,18 +25,21 @@ install:
   # glog
   - ps: wget https://github.com/google/glog/archive/v0.3.5.zip -O glog.zip
   - cmd: unzip glog.zip > nul
-  - cmake -G"%GENERATOR%" -Hglog-0.3.5 -Bbuild_glog -DCMAKE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DBUILD_SHARED_LIBS=ON -DWITH_GFLAGS=OFF
+  - cmake -G"%GENERATOR%" -Hglog-0.3.5 -Bbuild_glog -DCMAKE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DBUILD_SHARED_LIBS=ON -DWITH_GFLAGS=OFF -DCMAKE_DEBUG_POSTFIX=d
   - cmake --build build_glog --config Release --target INSTALL
+  - cmake --build build_glog --config Debug --target INSTALL
   # gflags
   - ps: wget https://github.com/gflags/gflags/archive/v2.2.1.zip -O gflags.zip
   - cmd: unzip gflags.zip > nul
-  - cmake -G"%GENERATOR%" -Hgflags-2.2.1 -Bbuild_gflag -DCMAKE_INSTALL_PREFIX=c:/dev/%IDENTIFIER%
+  - cmake -G"%GENERATOR%" -Hgflags-2.2.1 -Bbuild_gflag -DCMAKE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DCMAKE_DEBUG_POSTFIX=d
   - cmake --build build_gflag --config Release --target INSTALL
+  - cmake --build build_gflag --config Debug --target INSTALL
   # SuiteSparse
   - ps: wget https://github.com/jlblancoc/suitesparse-metis-for-windows/archive/v1.3.1.zip -O suitesparse.zip
   - cmd: unzip suitesparse.zip > nul
   - cmake -G"%GENERATOR%" -Hsuitesparse-metis-for-windows-1.3.1 -Bbuild_suitesparse -DCMAKE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DBUILD_METIS=OFF
   - cmake --build build_suitesparse --config Release --target INSTALL
+  - cmake --build build_suitesparse --config Debug --target INSTALL
 
 build_script:
   - cd c:\dev
