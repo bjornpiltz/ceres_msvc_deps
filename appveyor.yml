@@ -54,4 +54,14 @@ build_script:
 artifacts:
   - path: ceres_deps_%IDENTIFIER%.zip
     name: ceres_deps_%IDENTIFIER%
+    
+deploy:
+  provider: GitHub
+  auth_token:
+    secure: QpA0FlNUekmYC5AQk77FEpMZ7iRP7LmXX19NTnIdRq4Bunregvdw3iPJ6epPpabJ
+  artifact: ceres_deps_%IDENTIFIER%
+  draft: false
+  prerelease: false
+  on:
+    appveyor_repo_tag: true
 
