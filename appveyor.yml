@@ -37,7 +37,7 @@ install:
   # SuiteSparse
   - ps: wget https://github.com/jlblancoc/suitesparse-metis-for-windows/archive/v1.3.1.zip -O suitesparse.zip
   - cmd: unzip suitesparse.zip > nul
-  - cmake -G"%GENERATOR%" -Hsuitesparse-metis-for-windows-1.3.1 -Bbuild_suitesparse -DCMAKE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DBUILD_METIS=OFF
+  - cmake -G"%GENERATOR%" -Hsuitesparse-metis-for-windows-1.3.1 -Bbuild_suitesparse -DSUITESPARSE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DCMAKE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DBUILD_METIS=OFF
   - cmake --build build_suitesparse --config Release --target INSTALL
   - cmake --build build_suitesparse --config Debug --target INSTALL
 
