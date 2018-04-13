@@ -17,6 +17,7 @@ install:
   - del "C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets"
   - cd c:\dev
   - mkdir %IDENTIFIER%
+  - mkdir %IDENTIFIER%\include
   # Eigen:
   - ps: wget http://bitbucket.org/eigen/eigen/get/3.3.4.zip -O eigen3.zip
   - cmd: unzip eigen3.zip > nul
