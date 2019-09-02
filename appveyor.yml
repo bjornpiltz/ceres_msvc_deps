@@ -15,6 +15,9 @@ environment:
     - GENERATOR: "Visual Studio 15 2017"
       IDENTIFIER: msvc_2017_x86
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - GENERATOR: "Visual Studio 16 2019"
+      IDENTIFIER: msvc_2019_x64
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
     
 clone_folder: c:\dev
 
@@ -25,29 +28,26 @@ install:
   - mkdir %IDENTIFIER%
   - mkdir %IDENTIFIER%\include
   # Eigen:
-  - ps: wget https://github.com/eigenteam/eigen-git-mirror/archive/3.3.4.zip -O eigen3.zip
+  - ps: wget https://github.com/eigenteam/eigen-git-mirror/archive/3.3.7.zip -O eigen3.zip
   - cmd: unzip eigen3.zip > nul
-  # The first cmake call is a workaround for a configure failure discussed here:
-  # https://bitbucket.org/eigen/eigen/pull-requests/287/add-cmake-option-to-enable-disable/activity
-  - cmake -G"%GENERATOR%" -Heigen-git-mirror-3.3.4 -Bbuild_eigen -DCMAKE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DBUILD_TESTING=ON
-  - cmake -G"%GENERATOR%" -Heigen-git-mirror-3.3.4 -Bbuild_eigen -DCMAKE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DBUILD_TESTING=OFF
+  - cmake -G"%GENERATOR%" -Heigen-git-mirror-3.3.7 -Bbuild_eigen -DCMAKE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DBUILD_TESTING=OFF
   - cmake --build build_eigen --config Release --target INSTALL
   # glog
-  - ps: wget https://github.com/google/glog/archive/v0.3.5.zip -O glog.zip
+  - ps: wget https://github.com/google/glog/archive/v0.4.0.zip -O glog.zip
   - cmd: unzip glog.zip > nul
-  - cmake -G"%GENERATOR%" -Hglog-0.3.5 -Bbuild_glog -DCMAKE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DBUILD_SHARED_LIBS=ON -DWITH_GFLAGS=OFF -DCMAKE_DEBUG_POSTFIX=d
+  - cmake -G"%GENERATOR%" -Hglog-0.4.0 -Bbuild_glog -DCMAKE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DBUILD_SHARED_LIBS=ON -DWITH_GFLAGS=OFF -DCMAKE_DEBUG_POSTFIX=d
   - cmake --build build_glog --config Release --target INSTALL
   - cmake --build build_glog --config Debug --target INSTALL
   # gflags
-  - ps: wget https://github.com/gflags/gflags/archive/v2.2.1.zip -O gflags.zip
+  - ps: wget https://github.com/gflags/gflags/archive/v2.2.2.zip -O gflags.zip
   - cmd: unzip gflags.zip > nul
-  - cmake -G"%GENERATOR%" -Hgflags-2.2.1 -Bbuild_gflag -DCMAKE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DCMAKE_DEBUG_POSTFIX=d
+  - cmake -G"%GENERATOR%" -Hgflags-2.2.2 -Bbuild_gflag -DCMAKE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DCMAKE_DEBUG_POSTFIX=d
   - cmake --build build_gflag --config Release --target INSTALL
   - cmake --build build_gflag --config Debug --target INSTALL
   # SuiteSparse
-  - ps: wget https://github.com/jlblancoc/suitesparse-metis-for-windows/archive/v1.3.1.zip -O suitesparse.zip
+  - ps: wget https://github.com/jlblancoc/suitesparse-metis-for-windows/archive/v1.5.0.zip -O suitesparse.zip
   - cmd: unzip suitesparse.zip > nul
-  - cmake -G"%GENERATOR%" -Hsuitesparse-metis-for-windows-1.3.1 -Bbuild_suitesparse -DSUITESPARSE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DCMAKE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DBUILD_METIS=OFF
+  - cmake -G"%GENERATOR%" -Hsuitesparse-metis-for-windows-1.5.0 -Bbuild_suitesparse -DSUITESPARSE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DCMAKE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DBUILD_METIS=OFF -DLAPACK_DIR="lapack_windows/x64/"
   - cmake --build build_suitesparse --config Release --target INSTALL
   - cmake --build build_suitesparse --config Debug --target INSTALL
 
