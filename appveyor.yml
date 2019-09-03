@@ -43,6 +43,7 @@ install:
   - cmake -G"%GENERATOR%" -Hsuitesparse-metis-for-windows-1.5.0 -Bbuild_suitesparse -DSUITESPARSE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DCMAKE_INSTALL_PREFIX=c:/dev/%IDENTIFIER% -DBUILD_METIS=OFF -DLAPACK_DIR="lapack_windows/x64/"
   - cmake --build build_suitesparse --config Release --target INSTALL
   - cmake --build build_suitesparse --config Debug --target INSTALL
+  - xcopy /y c:\dev\suitesparse-metis-for-windows-1.5.0\lapack_windows\x64\*.* c:\dev\%IDENTIFIER%\bin\
 
 build_script:
   - cd c:\dev
