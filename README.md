@@ -16,6 +16,7 @@ The following versions of Visual Studio are supported at the moment:
 * "Visual Studio 14 2015"
 * "Visual Studio 15 2017 Win64"
 * "Visual Studio 15 2017"
+* "Visual Studio 15 2019 Win64"
 
 ## Download
 Grab the latest release at [the releases page](https://github.com/bjornpiltz/ceres_msvc_deps/releases)
