@@ -13,9 +13,8 @@ The following C++ libraries are contained in this package:
 ## Visual Studio versions
 The following versions of Visual Studio are supported at the moment:
 * "Visual Studio 14 2015 Win64"
-* "Visual Studio 14 2015"
 * "Visual Studio 15 2017 Win64"
-* "Visual Studio 15 2017"
+* "Visual Studio 15 2019 Win64"
 
 ## Download
 Grab the latest release at [the releases page](https://github.com/bjornpiltz/ceres_msvc_deps/releases)
@@ -29,6 +28,7 @@ cmake^
   -B<build_dir>^
   -DCMAKE_INSTALL_PREFIX=<install_dir>^
   -DCMAKE_PREFIX_PATH=<ceres_msvc_deps_2017_x64>^
+  -DLAPACK_DIR=<ceres_msvc_deps_2017_x64>\bin^
   -DEIGEN_SPARSE=ON^
   -DBUILD_SHARED_LIBS=<ON/OFF>^
   -DBUILD_TESTING=<ON/OFF>^
@@ -38,12 +38,13 @@ cmake --build <build_dir> --config Release --target INSTALL
 ## Enabling SuiteSparse
 As of Ceres 1.14, you need to apply the following patch to make the flag -DSUITESPARSE work:
 ```diff
-diff -ruN ceres-solver-1.14.0_pristine/CMakeLists.txt ceres-solver-1.14.0_changed/CMakeLists.txt
---- ceres-solver-1.14.0_pristine/CMakeLists.txt	2018-03-22 05:00:14.000000000 +0100
-+++ ceres-solver-1.14.0_changed/CMakeLists.txt	2018-04-12 12:42:11.294191800 +0200
-@@ -245,17 +245,8 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index dc01b7d..ffe24c9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -246,17 +246,8 @@ if (EIGEN_FOUND)
  endif (EIGEN_FOUND)
- 
+
  if (LAPACK)
 -  find_package(LAPACK QUIET)
 -  if (LAPACK_FOUND)
@@ -59,18 +60,30 @@ diff -ruN ceres-solver-1.14.0_pristine/CMakeLists.txt ceres-solver-1.14.0_change
 +    set(SuiteSparse_USE_LAPACK_BLAS ON)
 +    message("-- Using LAPACK from SuiteSparse package")
  endif (LAPACK)
- 
+
  if (SUITESPARSE)
-@@ -263,7 +254,10 @@
+@@ -264,7 +255,9 @@ if (SUITESPARSE)
    # built with SuiteSparse support.
- 
+
    # Check for SuiteSparse and dependencies.
 -  find_package(SuiteSparse)
 +  find_package(SuiteSparse CONFIG)
 +  set(SUITESPARSE_FOUND ON)
-+  include(${USE_SuiteSparse})
 +  list(APPEND SUITESPARSE_LIBRARIES ${SuiteSparse_LIBRARIES})
    if (SUITESPARSE_FOUND)
      # On Ubuntu the system install of SuiteSparse (v3.4.0) up to at least
      # Ubuntu 13.10 cannot be used to link shared libraries.
+@@ -561,6 +554,11 @@ if (MSVC)
+   # Tuple sizes of 10 are used by Gtest.
+   add_definitions("-D_VARIADIC_MAX=10")
+
++  # VS 2017 15.8 fixed a long standing aligned_storage bug:
++  # https://devblogs.microsoft.com/cppblog/stl-features-and-fixes-in-vs-2017-15-8/
++  # but we have to opt-in since it is potentally ABI-breaking.
++  add_definitions("-D_ENABLE_EXTENDED_ALIGNED_STORAGE")
++
+   include(CheckIfUnderscorePrefixedBesselFunctionsExist)
+   check_if_underscore_prefixed_bessel_functions_exist(
+     HAVE_UNDERSCORE_PREFIXED_BESSEL_FUNCTIONS)
+
 ```
