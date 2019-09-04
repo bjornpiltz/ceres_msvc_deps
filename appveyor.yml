@@ -50,7 +50,7 @@ build_script:
   - 7z a ceres_deps_%IDENTIFIER%.zip %IDENTIFIER%\*
 
 artifacts:
-  - path: ceres_deps_%IDENTIFIER%_.zip
+  - path: ceres_deps_%IDENTIFIER%.zip
     name: ceres_deps_%IDENTIFIER%
     
 deploy:
