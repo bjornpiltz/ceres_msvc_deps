@@ -47,17 +47,17 @@ install:
 
 build_script:
   - cd c:\dev
-  - 7z a ceres_deps_%IDENTIFIER%.zip %IDENTIFIER%\*
+  - 7z a ceres_deps_$(APPVEYOR_REPO_TAG_NAME)_%IDENTIFIER%.zip %IDENTIFIER%\*
 
 artifacts:
-  - path: ceres_deps_%IDENTIFIER%.zip
-    name: ceres_deps_%IDENTIFIER%
+  - path: ceres_deps_$(APPVEYOR_REPO_TAG_NAME)_%IDENTIFIER%_.zip
+    name: ceres_deps_$(APPVEYOR_REPO_TAG_NAME)_%IDENTIFIER%
     
 deploy:
   provider: GitHub
   auth_token:
-    secure: QpA0FlNUekmYC5AQk77FEpMZ7iRP7LmXX19NTnIdRq4Bunregvdw3iPJ6epPpabJ
-  artifact: ceres_deps_%IDENTIFIER%
+    secure: +aBeZ3tfUPQLXLZqrv2OzfI6JNfkg05u9krZqLw318EvdEtLiGBXqUO1EyFGWQY5
+  artifact: ceres_deps_$(APPVEYOR_REPO_TAG_NAME)_%IDENTIFIER%
   draft: false
   prerelease: false
   on:
